@@ -33,7 +33,7 @@ void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet
     }   
     int query_len = strlen(fqdn);
     type = question[query_len+2];
-    strcpy(dns_qr->qname, fqdn);
+    strncpy(dns_qr->qname, fqdn, query_len);
     dns_qr->type = type;
 
     // don't forget to cleanup

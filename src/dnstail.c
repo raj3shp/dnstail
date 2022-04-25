@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
         printf("usage: dnstail <ip> <port>\n");
         exit(1);
     }
-    strcpy(host, argv[1]);
+    strncpy(host, argv[1], 15);
     port = atoi(argv[2]);
     dns_start(port, host);
     free(host);
