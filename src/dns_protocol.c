@@ -22,7 +22,8 @@ void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet
     {
         int length = question[j];
         // length 0 indicates end of query
-        if (length == 0)
+        // 63 max chars in single namespace
+        if (length == 0 || length > 63)
             break;
         for (i = 1; i <= length; i++)
         {
