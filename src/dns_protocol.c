@@ -111,7 +111,7 @@ void get_query_type_value(u_int16_t type, char *value)
         break;
     default:
         id = type + '0';
-        strcpy(value, "Type" + id);
+        strcpy(value, strcat("Type", &id));
         break;
     }
 }
