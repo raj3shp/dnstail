@@ -75,7 +75,4 @@ void proxy_dns_reuqest(char *req_buf, int req_size, struct sockaddr_in from, int
     free(send_buf);
     free(res_buf);
     free(type_value);
-
-    // make sure to always exit
-    exit(0);
 }

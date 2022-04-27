@@ -9,6 +9,7 @@
 #include <netdb.h>
 #include <fcntl.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 #include "server.h"
 #include "dns_protocol.h"
@@ -54,7 +55,9 @@ void process_request(int sd)
         if (fork() == 0)
         {
             proxy_dns_reuqest(req_buf, recv_size, from, sd);
+            exit(0);
         }
+        signal(SIGCHLD,SIG_IGN);
         free(req_buf);
         continue;
     }

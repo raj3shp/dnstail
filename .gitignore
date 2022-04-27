@@ -1,4 +1,5 @@
 .vscode/
+dnstail
 # Prerequisites
 *.d
 

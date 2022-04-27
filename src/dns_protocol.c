@@ -42,7 +42,8 @@ void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet
 }
 
 void get_query_type_value(u_int16_t type, char *value)
-{
+{   
+    char id;
     switch (type)
     {
     case 1:
@@ -93,8 +94,24 @@ void get_query_type_value(u_int16_t type, char *value)
     case 16:
         strcpy(value, "TXT");
         break;
+    case 28:
+        strcpy(value, "AAAA");
+        break;
+    case 252:
+        strcpy(value, "AXFR");
+        break;
+    case 253:
+        strcpy(value, "MAILB");
+        break;
+    case 254:
+        strcpy(value, "MAILA");
+        break;
+    case 255:
+        strcpy(value, "*");
+        break;
     default:
-        strcpy(value, "INVALID");
+        id = type + '0';
+        strcpy(value, "Type" + id);
         break;
     }
 }
