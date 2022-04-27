@@ -14,7 +14,7 @@ void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet
 
     question = pkt->data;
 
-    // max query size 253 characters
+    // max domain name size 253 characters
     fqdn = calloc(MAX_QUERY_SIZE, sizeof(char));
 
     j = 0;
@@ -22,7 +22,7 @@ void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet
     {
         int length = question[j];
         // length 0 indicates end of query
-        // 63 max chars in single namespace
+        // 63 chars max namspace length
         if (length == 0 || length > 63)
             break;
         for (i = 1; i <= length; i++)
@@ -31,9 +31,9 @@ void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet
         }
         strcat(fqdn, ".");
         j += (length + 1);
-    }   
+    }
     int query_len = strlen(fqdn);
-    type = question[query_len+2];
+    type = question[query_len + 2];
     strncpy(dns_qr->qname, fqdn, query_len);
     dns_qr->type = type;
 
