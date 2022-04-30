@@ -6,11 +6,15 @@
 
 #include "dns_protocol.h"
 
-void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet *pkt)
+void parse_dns_query(struct dns_query *dns_qr, char *req_buf, int req_size)
 {
     u_int16_t i, j, type;
-    char *fqdn;
-    char *question;
+    char *fqdn, *question;
+
+    struct dns_packet *pkt;
+
+    pkt = calloc(1, sizeof(struct dns_packet));
+    memcpy(pkt, req_buf, req_size);
 
     question = pkt->data;
 
@@ -18,7 +22,7 @@ void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet
     fqdn = calloc(MAX_QUERY_SIZE, sizeof(char));
 
     j = 0;
-    while (j <= query_size)
+    while (j <= req_size)
     {
         int length = question[j];
         // length 0 indicates end of query
@@ -37,12 +41,12 @@ void parse_dns_query(struct dns_query *dns_qr, int query_size, struct dns_packet
     strncpy(dns_qr->qname, fqdn, query_len);
     dns_qr->type = type;
 
-    // don't forget to cleanup
     free(fqdn);
+    free(pkt);
 }
 
 void get_query_type_value(u_int16_t type, char *value)
-{   
+{
     char id;
     switch (type)
     {

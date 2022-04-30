@@ -34,7 +34,7 @@ struct dns_query
     char *src_ip;
 };
 
-void parse_dns_query(struct dns_query *query, int query_size, struct dns_packet *pkt);
+void parse_dns_query(struct dns_query *dns_qr, char *req_buf, int req_size);
 void get_query_type_value(u_int16_t type, char *value);
 
 #endif

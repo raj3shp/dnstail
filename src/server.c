@@ -51,13 +51,14 @@ void process_request(int sd)
     {
         req_buf = malloc(PACKET_SIZE + 4);
         recv_size = recvfrom(sd, buf, PACKET_SIZE + 4, 0, (struct sockaddr *)&from, &from_addr_size);
+
         memcpy(req_buf, buf, recv_size);
         if (fork() == 0)
         {
             proxy_dns_reuqest(req_buf, recv_size, from, sd);
             exit(0);
         }
-        signal(SIGCHLD,SIG_IGN);
+        signal(SIGCHLD, SIG_IGN);
         free(req_buf);
         continue;
     }
